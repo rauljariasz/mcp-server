@@ -20,6 +20,7 @@ export function sendCodeVerification(correoDestino: string, codigo: string) {
 
   transporter.sendMail(mailOptions, (error: any, info: { response: any }) => {
     if (error) {
+      console.log(`${process.env.CORREO}`, `${process.env.CORREO_PASS}`);
       console.error('Error al enviar el correo:', error);
     } else {
       console.log('Correo enviado:', info.response);

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import users from '../models/user.prisma';
-import { comparePasswords } from '../services/auth.service';
+import { comparePasswords, hashPassword } from '../services/auth.service';
 
 // Obtener datos del usuario
 export const getDataUser = async (
@@ -207,6 +207,84 @@ export const editEmail = async (req: Request, res: Response): Promise<void> => {
       data: {
         email,
       },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Hubo un error la verifiación.',
+    });
+  }
+};
+
+// Cambiar correo
+// Cambiar usuario, nombre y apellido.
+export const editPassword = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.body?.token;
+  const { password, new_password } = req.body;
+
+  try {
+    // *---------------* //
+    // Pre-validaciones //
+    // *-------------* //
+
+    const user = await users.findUnique({
+      where: { id },
+    });
+
+    // Si no existe el usuario, responde con error.
+    if (!user) {
+      res.status(404).json({
+        message: 'Usuario no encontrado',
+      });
+      return;
+    }
+
+    if (!new_password || !password) {
+      res.status(400).json({
+        message: 'Contraseña y nueva contraseña necesarios.',
+      });
+      return;
+    }
+
+    // *-----* //
+    // Logica //
+    // *---* //
+
+    const passwordMatch = await comparePasswords(password, user.password);
+
+    if (!passwordMatch) {
+      res
+        .status(400)
+        .json({ message: 'La contraseña introducida es incorrecta.' });
+      return;
+    }
+
+    const hashedPassword = await hashPassword(new_password);
+
+    const isSamePassword = await comparePasswords(new_password, user.password);
+
+    if (isSamePassword) {
+      res
+        .status(400)
+        .json({
+          message:
+            'No puedes usar la misma contraseña, por favor introduce otra.',
+        });
+      return;
+    }
+
+    await users.update({
+      where: { id },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    res.status(200).json({
+      message: 'Tu contraseña fue cambiada exitosamente.',
     });
   } catch (error) {
     console.log(error);
