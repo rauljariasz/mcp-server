@@ -4,6 +4,8 @@
   "description": "Backend de plataforma de cursos online",
   "main": "src/app.js",
   "scripts": {
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
     "dev": "tsnd --respawn --clear src/server.ts",
     "build": "rimraf ./dist && tsc && npm run prisma:generate && npm run prisma:migrate",
     "start": "node dist/server.js "
