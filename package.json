@@ -4,7 +4,9 @@
   "description": "Backend de plataforma de cursos online",
   "main": "src/app.js",
   "scripts": {
-    "dev": "tsnd --respawn --clear src/server.ts"
+    "dev": "tsnd --respawn --clear src/server.ts",
+    "build": "rimraf ./dist && tsc",
+    "start": "node dist/server.js "
   },
   "author": "Raul Arias",
   "license": "ISC",
