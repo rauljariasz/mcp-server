@@ -226,7 +226,7 @@ export const verify = async (req: Request, res: Response): Promise<void> => {
           },
         });
 
-        const { password, id, ...userInfo } = user;
+        const { password, id, last_name, viewed_classes, ...userInfo } = user;
 
         res.status(200).json({
           message: 'Tu cuenta ha sido verificada correctamente.',
@@ -235,6 +235,8 @@ export const verify = async (req: Request, res: Response): Promise<void> => {
             verified: true,
             verification_code: null,
             code_expiry: null,
+            lastName: last_name,
+            viewedClasses: viewed_classes,
             token,
             refresh,
           },
