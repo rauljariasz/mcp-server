@@ -47,7 +47,7 @@ export const authenticatedReq = (
             { expiresIn: '8h' }
           );
 
-          res.set('Token', newAccessToken);
+          res.set('token', newAccessToken);
 
           return res.status(403).json({
             message: 'Access token vencido.',
@@ -59,7 +59,7 @@ export const authenticatedReq = (
     // Le agregamos la información a la request
     req.body.token = decoded;
 
-    res.set('Token', token);
+    res.set('token', token);
 
     // Todo OK!.
     next();

@@ -10,7 +10,8 @@ const app = express();
 
 // Configuración de CORS
 const corsOptions = {
-  origin: 'https://rauljariasz.github.io',
+  origin: process.env.URL_FRONT,
+  exposedHeaders: ['token'],
 };
 
 app.use(cors(corsOptions));

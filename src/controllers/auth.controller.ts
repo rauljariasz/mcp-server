@@ -119,12 +119,20 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     // Si coinciden, validamos si esta verificado o no
     if (user?.verified) {
-      const { password, id: userId, ...userInfo } = user;
+      const {
+        password,
+        id: userId,
+        last_name,
+        viewed_classes,
+        ...userInfo
+      } = user;
       const token = generateToken(user);
       const refresh = generateRefresh(user);
       res.status(200).json({
         data: {
           ...userInfo,
+          lastName: last_name,
+          viewedClasses: viewed_classes,
           token,
           refresh,
         },
