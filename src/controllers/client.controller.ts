@@ -25,10 +25,18 @@ export const getDataUser = async (
     // *-----* //
     // Logica //
     // *---* //
-    const { password, id: userId, ...userInfo } = user;
+    const {
+      password,
+      id: userId,
+      viewed_classes,
+      last_name,
+      ...userInfo
+    } = user;
     res.status(200).json({
       data: {
         ...userInfo,
+        viewedClasses: viewed_classes,
+        lastName: last_name,
       },
     });
   } catch (error) {
@@ -267,12 +275,10 @@ export const editPassword = async (
     const isSamePassword = await comparePasswords(new_password, user.password);
 
     if (isSamePassword) {
-      res
-        .status(400)
-        .json({
-          message:
-            'No puedes usar la misma contraseña, por favor introduce otra.',
-        });
+      res.status(400).json({
+        message:
+          'No puedes usar la misma contraseña, por favor introduce otra.',
+      });
       return;
     }
 
