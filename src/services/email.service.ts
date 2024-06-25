@@ -2,7 +2,9 @@ import * as nodemailer from 'nodemailer';
 
 // Configura el transporte de nodemailer
 const transporter = nodemailer.createTransport({
-  service: 'hotmail',
+  service: 'gmail',
+  port: 465,
+  secure: true,
   auth: {
     user: `${process.env.CORREO}`,
     pass: `${process.env.CORREO_PASS}`,
