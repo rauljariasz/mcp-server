@@ -19,6 +19,12 @@ enum ROLES {
   FREE
 }
 
+enum LEVELS {
+  BASIC
+  INTERMEDIATE
+  ADVANCED
+}
+
 model users {
   id             Int      @id @default(autoincrement())
   email          String   @unique
@@ -31,4 +37,25 @@ model users {
   verified       Boolean  @default(false)
   verification_code  String?
   code_expiry        DateTime?
+}
+
+model courses {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  level       LEVELS
+  nameUrl     String    @unique
+  imageUrl    String?
+  classes     classes[] 
+}
+
+model classes {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  role        ROLES
+  classNumber Int
+  imageUrl    String?
+  routeId     Int
+  route       courses    @relation(fields: [routeId], references: [id])
 }
