@@ -55,7 +55,8 @@ model classes {
   description String
   role        ROLES
   classNumber Int
-  imageUrl    String?
+  videoUrl    String
   routeId     Int
   route       courses    @relation(fields: [routeId], references: [id])
+  imageUrl    String?
 }
