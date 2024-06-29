@@ -9,9 +9,15 @@ export const getCourses = async (
 ): Promise<void> => {
   try {
     const coursesList = await courses.findMany();
-    res.status(200).json({
-      data: coursesList,
-    });
+    if (coursesList) {
+      res.status(200).json({
+        data: coursesList,
+      });
+    } else {
+      res.status(200).json({
+        data: [],
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -30,9 +36,15 @@ export const getClasses = async (req: Request, res: Response) => {
       orderBy: { classNumber: 'asc' },
     });
 
-    res.status(200).json({
-      data: classesList,
-    });
+    if (classesList) {
+      res.status(200).json({
+        data: classesList,
+      });
+    } else {
+      res.status(200).json({
+        data: [],
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({

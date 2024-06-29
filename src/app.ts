@@ -12,7 +12,7 @@ const app = express();
 
 // Configuración de CORS
 const corsOptions = {
-  origin: 'https://rauljariasz.github.io',
+  origin: 'http://localhost:3000',
   exposedHeaders: ['token'],
 };
 
