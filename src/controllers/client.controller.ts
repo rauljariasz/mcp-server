@@ -299,3 +299,74 @@ export const editPassword = async (
     });
   }
 };
+
+// Marcar una clase como vista
+export const markClassAsViewed = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.body?.token;
+  const { classId } = req.body;
+
+  try {
+    // *---------------* //
+    // Pre-validaciones //
+    // *-------------* //
+
+    if (!classId) {
+      res.status(400).json({
+        message: 'El ID de la clase es necesario.',
+      });
+    }
+
+    const user = await users.findUnique({
+      where: { id },
+    });
+
+    // Si no existe el usuario, responde con error.
+    if (!user) {
+      res.status(404).json({
+        message: 'Usuario no encontrado',
+      });
+      return;
+    }
+
+    // Validamos si ya existe
+    if (user.viewed_classes.includes(classId)) {
+      res.status(400).json({
+        message: 'Esta clase ya existe en la lista.',
+      });
+      return;
+    }
+
+    // *-----* //
+    // Logica //
+    // *---* //
+
+    user.viewed_classes.push(classId);
+
+    await users.update({
+      where: { id },
+      data: {
+        viewed_classes: user.viewed_classes,
+      },
+    });
+
+    const {
+      id: userId,
+      verification_code,
+      code_expiry,
+      password,
+      ...userInfo
+    } = user;
+
+    res.status(200).json({
+      data: userInfo,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: 'Hubo un error la verifiación.',
+    });
+  }
+};
