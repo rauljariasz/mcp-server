@@ -46,7 +46,7 @@ model courses {
   level       LEVELS
   nameUrl     String    @unique
   imageUrl    String?
-  classes     classes[] 
+  classes     classes[]
 }
 
 model classes {
@@ -57,6 +57,6 @@ model classes {
   classNumber Int
   videoUrl    String
   routeId     Int
-  route       courses    @relation(fields: [routeId], references: [id])
+  route       courses    @relation(fields: [routeId], references: [id], onDelete: Cascade)
   imageUrl    String?
 }
