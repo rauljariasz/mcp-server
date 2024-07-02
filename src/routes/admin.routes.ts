@@ -6,6 +6,7 @@ import {
   createCourse,
   deleteCourse,
   editCourse,
+  updateClassOrder,
 } from '../controllers/courses.controller';
 import {
   createClass,
@@ -21,6 +22,7 @@ router.put('/editUserRole', authenticatedReq, isAdmin, editUserRole);
 router.post('/createCourse', authenticatedReq, isAdmin, createCourse);
 router.put('/editCourse', authenticatedReq, isAdmin, editCourse);
 router.delete('/deleteCourse', authenticatedReq, isAdmin, deleteCourse);
+router.post('/updateClassOrder', authenticatedReq, isAdmin, updateClassOrder);
 // CRUD clases
 router.post('/createClass', authenticatedReq, isAdmin, createClass);
 router.put('/editClass', authenticatedReq, isAdmin, editClass);
