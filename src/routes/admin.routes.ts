@@ -1,7 +1,11 @@
 import express from 'express';
 import { authenticatedReq } from '../middlewares/auth.handler';
 import { isAdmin } from '../middlewares/admin.handler';
-import { editUserRole, getUser } from '../controllers/admin.controller';
+import {
+  editUserRole,
+  getTotalUsers,
+  getUser,
+} from '../controllers/admin.controller';
 import {
   createCourse,
   deleteCourse,
@@ -18,6 +22,7 @@ const router = express.Router();
 
 router.get('/getUser', authenticatedReq, isAdmin, getUser);
 router.put('/editUserRole', authenticatedReq, isAdmin, editUserRole);
+router.get('/getTotalUsers', authenticatedReq, isAdmin, getTotalUsers);
 // CRUD cursos
 router.post('/createCourse', authenticatedReq, isAdmin, createCourse);
 router.put('/editCourse', authenticatedReq, isAdmin, editCourse);

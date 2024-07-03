@@ -44,6 +44,32 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+// Obtener la cantidad de usuarios FREE/PREMIUM
+export const getTotalUsers = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const allUsers = await users.findMany();
+
+    const premiumUsers = allUsers.filter((item) => item.role === ROLES.PREMIUM);
+    const freeUsers = allUsers.filter((item) => item.role === ROLES.FREE);
+
+    if (allUsers) {
+      res.status(200).json({
+        data: {
+          premium: premiumUsers.length,
+          free: freeUsers.length,
+        },
+      });
+    } else {
+      res.status(200).json({
+        data: [],
+      });
+    }
+  } catch (error) {}
+};
+
 // Editar el rol de un usuario
 export const editUserRole = async (
   req: Request,
