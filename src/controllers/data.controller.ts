@@ -8,7 +8,9 @@ export const getCourses = async (
   res: Response
 ): Promise<void> => {
   try {
-    const coursesList = await courses.findMany();
+    const coursesList = await courses.findMany({
+      orderBy: { id: 'asc' },
+    });
     if (coursesList) {
       res.status(200).json({
         data: coursesList,

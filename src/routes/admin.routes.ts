@@ -20,7 +20,7 @@ import {
 
 const router = express.Router();
 
-router.get('/getUser', authenticatedReq, isAdmin, getUser);
+router.post('/getUser', authenticatedReq, isAdmin, getUser);
 router.put('/editUserRole', authenticatedReq, isAdmin, editUserRole);
 router.get('/getTotalUsers', authenticatedReq, isAdmin, getTotalUsers);
 // CRUD cursos

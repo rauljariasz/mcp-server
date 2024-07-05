@@ -357,11 +357,17 @@ export const markClassAsViewed = async (
       verification_code,
       code_expiry,
       password,
+      last_name,
+      viewed_classes,
       ...userInfo
     } = user;
 
     res.status(200).json({
-      data: userInfo,
+      data: {
+        lastName: last_name,
+        viewedClasses: viewed_classes,
+        ...userInfo
+      },
     });
   } catch (error) {
     console.log(error);

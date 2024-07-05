@@ -54,7 +54,9 @@ export const createCourse = async (
       },
     });
 
-    const allCourses = await courses.findMany();
+    const allCourses = await courses.findMany({
+      orderBy: { id: 'asc' },
+    });
 
     res.status(201).json({
       data: allCourses,
@@ -91,11 +93,13 @@ export const editCourse = async (
         where: { nameUrl },
       });
 
-      if (nameUrlAlreadyExist) {
-        res.status(400).json({
-          message: 'El nameUrl ingresado ya existe.',
-        });
-        return;
+      if (nameUrlAlreadyExist?.id !== id) {
+        if (nameUrlAlreadyExist) {
+          res.status(400).json({
+            message: 'El nameUrl ingresado ya existe.',
+          });
+          return;
+        }
       }
     }
 
@@ -133,7 +137,9 @@ export const editCourse = async (
     });
 
     // Respondemos con la lista de cursos para que en el front actualicen el estado de los cursos
-    const rta = await courses.findMany();
+    const rta = await courses.findMany({
+      orderBy: { id: 'asc' },
+    });
 
     res.status(200).json({
       message: 'Curso editado correctamente.',
@@ -183,7 +189,9 @@ export const deleteCourse = async (
       where: { id },
     });
 
-    const coursesRta = await courses.findMany();
+    const coursesRta = await courses.findMany({
+      orderBy: { id: 'asc' },
+    });
     res.status(200).json({
       message: 'Curso eliminado correctamente.',
       data: coursesRta,
