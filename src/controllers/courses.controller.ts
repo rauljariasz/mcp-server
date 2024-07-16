@@ -199,7 +199,7 @@ export const deleteCourse = async (
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: 'Hubo un error en la petición.',
+      message: 'Hubo un error en la petición..',
     });
   }
 };
